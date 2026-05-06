@@ -60,6 +60,9 @@ def get_connection():
         "charset":  "utf8mb4",
     }
     if not cfg["host"]:
+        if "DB_HOST" not in st.secrets:
+            st.error("⚠️ Database secrets not configured. Please add DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME in Streamlit Cloud → Settings → Secrets.")
+            st.stop()
         cfg = {
             "host":     st.secrets["DB_HOST"],
             "port":     int(st.secrets["DB_PORT"]),
