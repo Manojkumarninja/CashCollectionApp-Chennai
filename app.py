@@ -99,6 +99,8 @@ def run_write(sql, params=None):
 @st.cache_data(ttl=60)
 def get_delivery_dates():
     df = run_query(f"SELECT DISTINCT DeliveryDate FROM {TABLE} ORDER BY DeliveryDate DESC")
+    if df.empty or "DeliveryDate" not in df.columns:
+        return []
     return df["DeliveryDate"].tolist()
 
 
